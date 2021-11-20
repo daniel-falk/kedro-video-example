@@ -28,9 +28,9 @@
 
 """Project pipelines."""
 from typing import Dict
-
 from kedro.pipeline import Pipeline
 
+from test2.pipelines import data_preprocessing
 
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.
@@ -38,4 +38,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
     Returns:
         A mapping from a pipeline name to a ``Pipeline`` object.
     """
-    return {"__default__": Pipeline([])}
+    preproc_pipeline = data_preprocessing.create_pipeline()
+    return {"__default__": preproc_pipeline, "dp": preproc_pipeline}
