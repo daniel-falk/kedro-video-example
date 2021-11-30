@@ -1,2 +1,2 @@
 def video_to_frames(video):
-    return video[0]
+    return {"%08d" % i: video[i] for i in range(min(20, len(video)))}
