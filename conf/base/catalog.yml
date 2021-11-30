@@ -3,10 +3,10 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
-traffic:
-    type: json.JSONDataSet
-    filepath: data/01_raw/traffic.json
+virat_tiny:
+    type: test2.extras.datasets.video_dataset.VideoDataSet
+    filepath: data/01_raw/virat_tiny/VIRAT_S_050000_01_000207_000361.mp4
 
-raw_images:
-    type: json.JSONDataSet
-    filepath: data/02_intermediate/traffic_raw_images.json
+first_frame:
+    type: pillow.image_dataset.ImageDataSet
+    filepath: data/02_intermediate/first_frame.jpg

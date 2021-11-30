@@ -1,4 +1,2 @@
-def preprocess_videos(dataset):
-    print(type(dataset))
-    print(dataset)
-    return dataset
+def video_to_frames(video):
+    return video[0]
