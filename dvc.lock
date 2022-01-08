@@ -1,32 +1,31 @@
 schema: '2.0'
 stages:
   Download video:
-    cmd: wget https://data.kitware.com/api/v1/file/56f587808d777f753209cadf/download
-      -O data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
+    cmd: wget https://data.kitware.com/api/v1/file/56f588068d777f753209cc7a/download
+      -O data/01_raw/virat_tiny/full.mp4
     outs:
-    - path: data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
-      md5: f0c034ffd99365e8a0a6b10360f51d3f
-      size: 13335200
+    - path: data/01_raw/virat_tiny/full.mp4
+      md5: fb6257f03ba3ec95779ac379bf12cf99
+      size: 3681035
   Make short video:
-    cmd: ffmpeg -to 00:00:01 -i data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
-      -c:v copy data/01_raw/virat_tiny/short.mp4
+    cmd: ffmpeg -to 00:00:01 -i data/01_raw/virat_tiny/full.mp4 -c:v copy data/01_raw/virat_tiny/short.mp4
     deps:
-    - path: data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
-      md5: f0c034ffd99365e8a0a6b10360f51d3f
-      size: 13335200
+    - path: data/01_raw/virat_tiny/full.mp4
+      md5: fb6257f03ba3ec95779ac379bf12cf99
+      size: 3681035
     outs:
     - path: data/01_raw/virat_tiny/short.mp4
-      md5: 7d4df4bdb6f87faf4087380cf8ee3153
-      size: 382979
+      md5: 792d5276b295385386cdb112ff98a063
+      size: 338050
   Extract frames:
     cmd: mkdir data/01_raw/virat_tiny/frames/ && ffmpeg -i data/01_raw/virat_tiny/short.mp4
       data/01_raw/virat_tiny/frames/%6d.png
     deps:
     - path: data/01_raw/virat_tiny/short.mp4
-      md5: 7d4df4bdb6f87faf4087380cf8ee3153
-      size: 382979
+      md5: 792d5276b295385386cdb112ff98a063
+      size: 338050
     outs:
     - path: data/01_raw/virat_tiny/frames/
-      md5: 73a05c4289c430d6a6d33b3b51be24f3.dir
-      size: 31480771
+      md5: f3a9c04db94d41c4a3f5367e5be9614c.dir
+      size: 24528878
       nfiles: 24
