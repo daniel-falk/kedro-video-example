@@ -14,29 +14,49 @@ import numpy as np
 
 
 # TODO: Implement save
-# TODO: Verify indexing
-# TODO: Implement indexing with slices
+
+
+class SlicedVideo:
+    def __init__(self, video, slice_indexes):
+        self.video = video
+        self.indexes = range(*slice_indexes.indices(len(video)))
+
+    def __getitem__(self, index) -> PIL.Image:
+        if isinstance(index, slice):
+            return SlicedVideo(self, index)
+        return self.video[self.indexes[index]]
+
+    def __len__(self) -> int:
+        return len(self.indexes)
+
+    def __getattr__(self, item):
+        return getattr(self.video, item)
 
 
 class Video:
     def __init__(self, filepath: str) -> None:
         self._cap = cv2.VideoCapture(filepath)
         self._n_frames = self._cap.get(cv2.CAP_PROP_FRAME_COUNT)
-        self.index = -1
+        self.index = 0 # Next available frame
 
-    def __getitem__(self, index: int) -> PIL.Image:
-        if index - 1 != self.index:
-            self._cap.set(cv2.CAP_PROP_POS_FRAMES, index - 1)
-        self.index = index + 1
+    def __getitem__(self, index: int):
+        if isinstance(index, slice):
+            return SlicedVideo(self, index)
+
+        if index < 0:
+            index += len(self)
+
+        if index != self.index:
+            self._cap.set(cv2.CAP_PROP_POS_FRAMES, index)
+        self.index = index + 1  # Next frame to decode after this
         ret, frame_bgr = self._cap.read()
         height, width = frame_bgr.shape[:2]
         return PIL.Image.frombuffer("RGB", (width, height), frame_bgr, "raw", "BGR", 0, 0)
 
-    def __len__(self):
+    def __len__(self) -> int:
         # OpenCV's frame count might be an approximation depending on what
         # headers are available in the video file
         return int(round(self._n_frames))
-
 
 
 class VideoDataSet(AbstractDataSet):

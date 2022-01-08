@@ -5,7 +5,14 @@
 
 virat_tiny:
     type: test2.extras.datasets.video_dataset.VideoDataSet
-    filepath: data/01_raw/virat_tiny/VIRAT_S_050000_01_000207_000361.mp4
+    filepath: data/01_raw/virat_tiny/short_video.mp4
+
+ffmpeg_frames_virat_tiny:
+    type: PartitionedDataSet
+    dataset:
+        type: pillow.image_dataset.ImageDataSet
+    path: data/01_raw/virat_tiny/
+    filename_suffix: ".png"
 
 frames_virat_tiny:
     type: PartitionedDataSet
