@@ -1,6 +1,6 @@
 def video_to_frames(video):
-    if len(video) < 20:
-        raise ValueError("Node expects video with atleast 20 frames")
+    if len(video) != 30:
+        raise ValueError("Node expects video with exactly 30 frames")
 
     # Test forward stepping in video
     imgs = {"%08d" % i: video[i] for i in range(5)}
