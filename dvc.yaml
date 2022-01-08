@@ -1,0 +1,20 @@
+stages:
+  Download video:
+    cmd: wget https://data.kitware.com/api/v1/file/56f587808d777f753209cadf/download
+      -O data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
+    outs:
+    - data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
+  Make short video:
+    cmd: ffmpeg -to 00:00:01 -i data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
+      -c:v copy data/01_raw/virat_tiny/short.mp4
+    deps:
+    - data/01_raw/virat_tiny/VIRAT_S_010000_05_000638_000718.mp4
+    outs:
+    - data/01_raw/virat_tiny/short.mp4
+  Extract frames:
+    cmd: mkdir data/01_raw/virat_tiny/frames/ && ffmpeg -i data/01_raw/virat_tiny/short.mp4
+      data/01_raw/virat_tiny/frames/%6d.png
+    deps:
+    - data/01_raw/virat_tiny/short.mp4
+    outs:
+    - data/01_raw/virat_tiny/frames/
