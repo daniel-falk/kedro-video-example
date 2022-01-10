@@ -8,8 +8,14 @@ There is a simple pipeline implemented in `src/test2/pipelines/data_preprocessin
 
 ## Installation
 
+Install the project. This will install dependencies such as Kedro and DVC. Installation can preferably be done inside a python virtual envrionment.
 ```bash
 cd src && pip install -e . && cd ..
+```
+
+After the installation finishes, standing in the repo root, download and reproduce the input data:
+```bash
+dvc repro
 ```
 
 ## Running
