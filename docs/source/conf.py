@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-# video_example documentation build
+# invalid_conf_example documentation build
 # configuration file, created by sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its
@@ -22,11 +22,11 @@ import re
 from kedro.framework.cli.utils import find_stylesheets
 from recommonmark.transform import AutoStructify
 
-from video_example import __version__ as release
+from invalid_conf_example import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "video_example"
+project = "invalid_conf_example"
 author = "Kedro"
 
 # The short X.Y version.
@@ -120,7 +120,7 @@ html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "video_exampledoc"
+htmlhelp_basename = "invalid_conf_exampledoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -148,8 +148,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "video_example.tex",
-        "video_example Documentation",
+        "invalid_conf_example.tex",
+        "invalid_conf_example Documentation",
         "Kedro",
         "manual",
     )
@@ -162,8 +162,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "video_example",
-        "video_example Documentation",
+        "invalid_conf_example",
+        "invalid_conf_example Documentation",
         [author],
         1,
     )
@@ -177,11 +177,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "video_example",
-        "video_example Documentation",
+        "invalid_conf_example",
+        "invalid_conf_example Documentation",
         author,
-        "video_example",
-        "Project video_example codebase.",
+        "invalid_conf_example",
+        "Project invalid_conf_example codebase.",
         "Data-Science",
     )
 ]

@@ -1,5 +1,5 @@
-"""video_example file for ensuring the package is executable
-as `video_example` and `python -m video_example`
+"""invalid_conf_example file for ensuring the package is executable
+as `invalid_conf_example` and `python -m invalid_conf_example`
 """
 import importlib
 from pathlib import Path

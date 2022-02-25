@@ -1,6 +1,6 @@
 [tool.kedro]
-package_name = "video_example"
-project_name = "video_example"
+package_name = "invalid_conf_example"
+project_name = "invalid_conf_example"
 project_version = "0.17.7"
 
 [tool.isort]
@@ -14,7 +14,7 @@ known_third_party = "kedro"
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/video_example -ra"""
+--cov src/invalid_conf_example -ra"""
 
 [tool.coverage.report]
 fail_under = 0

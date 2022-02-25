@@ -1,38 +1,64 @@
-# Kedro video dataset example pipeline
+# invalid_conf_example
 
-This repository aims to implement a video dataset for the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
+In this example the catalog config contains an invalid specification of the dataset.
 
-Currently the video dataset is implemented in `src/video_example/extras/datasets/video_dataset.py`.
+If starting the ipython terminal everythink looks fine excepot that the kedro specific variables are not specified in the help text. Trying to use the will result in a warning that they are not defined:
+```python
+(venv) danielfalk@Daniels-MacBook-Pro kedro-video-example % kedro ipython
+-------------------------------------------------------------------------------
+Starting a Kedro session with the following variables in scope
+startup_error, context
+Use the line magic %reload_kedro to refresh them
+or to see the error message if they are undefined
+-------------------------------------------------------------------------------
+ipython
+Python 3.10.1 (main, Jan 16 2022, 18:54:33) [Clang 13.0.0 (clang-1300.0.29.30)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.32.0 -- An enhanced Interactive Python. Type '?' for help.
+2022-02-25 20:28:47,719 - kedro.framework.session.store - INFO - `read()` not implemented for `BaseSessionStore`. Assuming empty store.
+2022-02-25 20:28:47,760 - root - WARNING - Kedro extension was registered. Make sure you pass the project path to `%reload_kedro` or set it using `%init_kedro`.
 
-There is a simple pipeline implemented in `src/video_example/pipelines/data_preprocessing` that reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`.
+In [1]: catalog.list()
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-1-486c331608ac> in <cell line: 1>()
+----> 1 catalog.list()
 
-## Installation
-
-Install the project. This will install dependencies such as Kedro and DVC. Installation can preferably be done inside a python virtual envrionment.
-```bash
-python -mvenv venv
-source venv/bin/activate
-pip install -r src/requirements.txt
+NameError: name 'catalog' is not defined
 ```
 
-After the installation finishes, standing in the repo root, download and reproduce the input data using dvc (which is installed from the requirements file above). This step requires the ffmpeg command which can be installed using `apt install ffmpeg` on ubuntu/debian or `brew install ffmpeg` on macOS.
-```bash
-dvc repro
+calling the magic command `%reload_kedro` will however give a usefull stacktrace:
+```python
+(venv) danielfalk@Daniels-MacBook-Pro kedro-video-example % kedro ipython
+-------------------------------------------------------------------------------
+Starting a Kedro session with the following variables in scope
+startup_error, context
+Use the line magic %reload_kedro to refresh them
+or to see the error message if they are undefined
+-------------------------------------------------------------------------------
+ipython
+Python 3.10.1 (main, Jan 16 2022, 18:54:33) [Clang 13.0.0 (clang-1300.0.29.30)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.32.0 -- An enhanced Interactive Python. Type '?' for help.
+2022-02-25 20:28:47,719 - kedro.framework.session.store - INFO - `read()` not implemented for `BaseSessionStore`. Assuming empty store.
+2022-02-25 20:28:47,760 - root - WARNING - Kedro extension was registered. Make sure you pass the project path to `%reload_kedro` or set it using `%init_kedro`.
+
+In [1]: %reload_kedro
+[...]
+~/src/kedro/kedro/io/data_catalog.py in from_config(cls, catalog, credentials, load_versions, save_version, journal)
+    321 
+    322             ds_config = _resolve_credentials(ds_config, credentials)
+--> 323             data_sets[ds_name] = AbstractDataSet.from_config(
+    324                 ds_name, ds_config, load_versions.get(ds_name), save_version
+    325             )
+
+~/src/kedro/kedro/io/core.py in from_config(cls, name, config, load_version, save_version)
+    143             )
+    144         except Exception as exc:
+--> 145             raise DataSetError(
+    146                 f"An exception occurred when parsing config "
+    147                 f"for DataSet `{name}`:\n{str(exc)}"
+
+DataSetError: An exception occurred when parsing config for DataSet `test_ds`:
+Class `datasets.invalid` not found or one of its dependencies has not been installed.
 ```
-
-This command will download an example movie, cut it to the correct length and extract the frames from it. The data is found in `data/01_raw`.
-
-## Running
-
-The kedro pipeline can be run with
-```bash
-kedro run
-```
-which will read the video file and create output frames in `data/02_intermediate/virat_tiny/`.
-
-Since the `dvc repro` command also generated raw frames using ffmpeg we can now compare the output of our pipeline using the `VideoDataSet` reader to the ones generated using ffmpeg. This can be done using the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with the following command and open the notebook.
-```bash
-kedro jupyter notebook
-```
-
-In the notebook result it can be seen that there are some small differences in the pixel values as decoded by OpenCV (`VideoDataSet`) and ffmpeg, but there is no offset or index errors in the addressing since the diagonal of the distance comparizon is the smallest.

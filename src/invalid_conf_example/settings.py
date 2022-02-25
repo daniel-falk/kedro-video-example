@@ -1,5 +1,5 @@
 """Project settings."""
-from video_example.hooks import ProjectHooks
+from invalid_conf_example.hooks import ProjectHooks
 
 # Instantiate and list your project hooks here
 HOOKS = (ProjectHooks(),)

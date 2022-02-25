@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 entry_point = (
-    "video_example = video_example.__main__:main"
+    "invalid_conf_example = invalid_conf_example.__main__:main"
 )
 
 
@@ -17,7 +17,7 @@ with open("requirements.txt", encoding="utf-8") as f:
             requires.append(req)
 
 setup(
-    name="video_example",
+    name="invalid_conf_example",
     version="0.1",
     packages=find_packages(exclude=["tests"]),
     entry_points={"console_scripts": [entry_point]},

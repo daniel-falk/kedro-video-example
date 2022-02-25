@@ -3,20 +3,6 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
-virat_tiny:
-    type: video_example.extras.datasets.video_dataset.VideoDataSet
-    filepath: data/01_raw/virat_tiny/short.mp4
-
-ffmpeg_frames_virat_tiny:
-    type: PartitionedDataSet
-    dataset:
-        type: pillow.ImageDataSet
-    path: data/01_raw/virat_tiny/frames/
-    filename_suffix: ".png"
-
-frames_virat_tiny:
-    type: PartitionedDataSet
-    dataset:
-        type: pillow.ImageDataSet
-    path: data/02_intermediate/virat_tiny/
-    filename_suffix: ".jpg"
+test_ds:
+    type: datasets.invalid
+    filepath: data/01_raw/test.test
