@@ -1,7 +1,7 @@
 [tool.kedro]
-package_name = "test2"
-project_name = "test2"
-project_version = "0.17.5"
+package_name = "video_example"
+project_name = "video_example"
+project_version = "0.17.7"
 
 [tool.isort]
 multi_line_output = 3
@@ -14,4 +14,9 @@ known_third_party = "kedro"
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/test2 -ra"""
+--cov src/video_example -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]

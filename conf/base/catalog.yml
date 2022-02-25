@@ -4,19 +4,19 @@
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
 virat_tiny:
-    type: test2.extras.datasets.video_dataset.VideoDataSet
+    type: video_example.extras.datasets.video_dataset.VideoDataSet
     filepath: data/01_raw/virat_tiny/short.mp4
 
 ffmpeg_frames_virat_tiny:
     type: PartitionedDataSet
     dataset:
-        type: pillow.image_dataset.ImageDataSet
+        type: pillow.ImageDataSet
     path: data/01_raw/virat_tiny/frames/
     filename_suffix: ".png"
 
 frames_virat_tiny:
     type: PartitionedDataSet
     dataset:
-        type: pillow.image_dataset.ImageDataSet
+        type: pillow.ImageDataSet
     path: data/02_intermediate/virat_tiny/
     filename_suffix: ".jpg"

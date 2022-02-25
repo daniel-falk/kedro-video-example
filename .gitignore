@@ -152,5 +152,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-.coveragerc
-.ipython/
