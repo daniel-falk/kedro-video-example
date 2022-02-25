@@ -10,23 +10,27 @@ There is a simple pipeline implemented in `src/test2/pipelines/data_preprocessin
 
 Install the project. This will install dependencies such as Kedro and DVC. Installation can preferably be done inside a python virtual envrionment.
 ```bash
-cd src && pip install -e . && cd ..
+python -mvenv venv
+source venv/bin/activate
+pip install -r src/requirements.txt
 ```
 
-After the installation finishes, standing in the repo root, download and reproduce the input data:
+After the installation finishes, standing in the repo root, download and reproduce the input data using dvc (which is installed from the requirements file above). This step requires `ffmpeg` which can be installed using `apt install ffmpeg` on ubuntu/debian or `brew install ffmpeg` on macOS.
 ```bash
 dvc repro
 ```
 
+This command will download an example movie, cut it to the correct length and extract the frames from it. The data is found in `data/01_raw`.
+
 ## Running
 
-The pipeline expects a video with exactly 30 frames (crop with e.g. `ffmpeg -to 00:00:01 -i VIRAT_S_050000_01_000207_000361.mp4 -c:v copy short_video.mp4`) and independent frames extracted with e.g. ffmpeg (`ffmpeg -i short_video.mp4 %6d.png`) as these are used to validate the indexing in the implemented `VideoDataSet`. These should all be located in the `data/01_raw/virat_tiny` folder as specified in the `conf/base/catalog.yml` file.
-
-The pipeline can be run with
+The kedro pipeline can be run with
 ```bash
 kedro run
 ```
-which will create output frames in `data/02_intermediate/virat_tiny/`. The interframe difference against the `ffmpeg` generated frames can be inspected with the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with
+which will read the video file and create output frames in `data/02_intermediate/virat_tiny/`.
+
+Since the `dvc repro` command also generated raw frames using `ffmpeg` we can now compare the output of our pipeline using the VideoDataset reader to the ones generated using `ffmpeg`. This can be done using the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with the following command and open to notebook.
 ```bash
 kedro jupyter notebook
 ```

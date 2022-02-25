@@ -19,3 +19,4 @@ click
 opencv-python
 numpy
 dvc
+matplotlib
