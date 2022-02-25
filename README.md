@@ -1,6 +1,6 @@
-# invalid_conf_example
+# Missing .ipython file example
 
-In this example the `.ipython/profile_default/ipython_config.py´ file is missing. This causes the magic command to be missing, but it is still present in the help text:
+In this example the `.ipython/profile_default/ipython_config.py` file is missing. This causes the magic command to be missing, but it is still present in the help text:
 
 ```bash
 (venv) danielfalk@Daniels-MacBook-Pro kedro-video-example % kedro ipython
