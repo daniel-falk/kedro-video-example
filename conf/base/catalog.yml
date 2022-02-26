@@ -20,3 +20,7 @@ frames_virat_tiny:
         type: pillow.ImageDataSet
     path: data/02_intermediate/virat_tiny/
     filename_suffix: ".jpg"
+
+same_video:
+    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    filepath: data/03_primary/same.mp4

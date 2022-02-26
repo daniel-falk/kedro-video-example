@@ -13,9 +13,6 @@ import PIL.Image
 import numpy as np
 
 
-# TODO: Implement save
-
-
 class SlicedVideo:
     def __init__(self, video, slice_indexes):
         self.video = video
@@ -38,6 +35,21 @@ class Video:
         self._cap = cv2.VideoCapture(filepath)
         self._n_frames = self._cap.get(cv2.CAP_PROP_FRAME_COUNT)
         self.index = 0 # Next available frame
+
+    @property
+    def fourcc(self):
+        fourcc = self._cap.get(cv2.CAP_PROP_FOURCC)
+        return int(fourcc).to_bytes(4, "little").decode("ascii")
+
+    @property
+    def fps(self):
+        return self._cap.get(cv2.CAP_PROP_FPS)
+
+    @property
+    def size(self):
+        width = int(self._cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        return width, height
 
     def __getitem__(self, index: int):
         if isinstance(index, slice):
@@ -94,11 +106,25 @@ class VideoDataSet(AbstractDataSet):
         with self._fs.open(load_path, mode="r") as f:
             return Video(load_path)
 
-    def _save(self, data: PIL.Image) -> None:
-        """Saves image data to the specified filepath."""
+    def _save(self, video: Video) -> None:
+        """Saves image data to the specified filepath.
+
+        TODO: This can only save video from video file, i.e. one cant modify the video.
+        Create subclasses of Video so that videos can be created from an iterable of frames or
+        from a generator yielding frames.
+        """
         save_path = get_filepath_str(self._filepath, self._protocol)
-        with self._fs.open(save_path, mode="wb") as f:
-            raise NotImplementedError("Saving video is not yet supported")
+        # TODO: This assumes that the output file has the same fourcc code as the input file,
+        # this might not be the case since we can use one VideoDataSet to read e.g. a mp4 file with H264 video
+        # and then save it to another VideoDataSet which should use an .avi file with MJPEG
+        # TODO: There is no way to use the OpenVN VideoWrite to write to an open file, so it does not
+        # work together with fsspec. Investigate this further...
+        writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*video.fourcc), video.fps, video.size)
+        try:
+            for frame in video:
+                writer.write(np.array(frame)[:,:,::-1])  # PIL images are RGB, opencv expects BGR
+        finally:
+            writer.release()
 
     def _describe(self) -> Dict[str, Any]:
         return dict(filepath=self._filepath, protocol=self._protocol)
