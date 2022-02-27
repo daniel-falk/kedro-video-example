@@ -1,5 +1,5 @@
 from pathlib import PurePosixPath
-from typing import Any, Dict, Iterable
+from typing import Any, Dict, Iterable, Generator, Union
 
 from kedro.io.core import (
     AbstractDataSet,
@@ -11,6 +11,7 @@ import fsspec
 import cv2
 import PIL.Image
 import numpy as np
+import more_itertools
 
 
 class SlicedVideo:
@@ -18,7 +19,7 @@ class SlicedVideo:
         self.video = video
         self.indexes = range(*slice_indexes.indices(len(video)))
 
-    def __getitem__(self, index) -> PIL.Image.Image:
+    def __getitem__(self, index: Union[int, slice]) -> PIL.Image.Image:
         if isinstance(index, slice):
             return SlicedVideo(self, index)
         return self.video[self.indexes[index]]
@@ -75,7 +76,7 @@ class FileVideo(AbstractVideo):
         height = int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         return width, height
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, index: Union[int, slice]):
         if isinstance(index, slice):
             return SlicedVideo(self, index)
 
@@ -119,10 +120,45 @@ class IterableVideo(AbstractVideo):
     def size(self):
         return self._size
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, index: Union[int, slice]):
         if isinstance(index, slice):
             return SlicedVideo(self, index)
         return self._frames[index]
+
+
+class GeneratorVideo(AbstractVideo):
+    """A video object with frames yielded by a generator"""
+
+    def __init__(
+        self,
+        frames: Generator[PIL.Image.Image, None, None],
+        length,
+        fps: float,
+        fourcc: str = "avc1",
+    ) -> None:
+        self._n_frames = length
+        self._gen = more_itertools.peekable(frames)
+        self._fourcc = fourcc
+        self._size = self._gen.peek().size
+        self._fps = fps
+
+    @property
+    def fourcc(self):
+        return self._fourcc
+
+    @property
+    def fps(self):
+        return self._fps
+
+    @property
+    def size(self):
+        return self._size
+
+    def __next__(self):
+        return next(self._gen)
+
+    def __iter__(self):
+        return self
 
 
 class VideoDataSet(AbstractDataSet):

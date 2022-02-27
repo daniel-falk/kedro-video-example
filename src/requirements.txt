@@ -21,3 +21,4 @@ numpy
 dvc
 matplotlib
 scikit-image
+more-itertools

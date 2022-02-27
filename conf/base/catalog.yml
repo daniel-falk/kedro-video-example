@@ -28,3 +28,7 @@ same_video:
 edge_video:
     type: video_example.extras.datasets.video_dataset.VideoDataSet
     filepath: data/03_primary/edge.mp4
+
+edge_video_generator:
+    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    filepath: data/03_primary/edge_generator.mp4
