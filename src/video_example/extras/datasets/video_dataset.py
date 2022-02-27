@@ -198,10 +198,6 @@ class VideoDataSet(AbstractDataSet):
 
     def _save(self, video: AbstractVideo) -> None:
         """Saves image data to the specified filepath.
-
-        TODO: This can only save video from video file, i.e. one cant modify the video.
-        Create subclasses of AbstractVideo so that videos can be created from an iterable of frames or
-        from a generator yielding frames.
         """
         save_path = get_filepath_str(self._filepath, self._protocol)
         # TODO: This assumes that the output file has the same fourcc code as the input file,
