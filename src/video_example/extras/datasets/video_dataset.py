@@ -62,6 +62,8 @@ class Video:
             self._cap.set(cv2.CAP_PROP_POS_FRAMES, index)
         self.index = index + 1  # Next frame to decode after this
         ret, frame_bgr = self._cap.read()
+        if not ret:
+            raise IndexError()
         height, width = frame_bgr.shape[:2]
         return PIL.Image.frombuffer(
             "RGB", (width, height), frame_bgr, "raw", "BGR", 0, 0
@@ -126,8 +128,8 @@ class VideoDataSet(AbstractDataSet):
         )
         try:
             for frame in video:
-                writer.write(
-                    np.array(frame)[:, :, ::-1]  # PIL images are RGB, opencv expects BGR
+                writer.write(  # PIL images are RGB, opencv expects BGR
+                    np.array(frame)[:, :, ::-1]
                 )
         finally:
             writer.release()
