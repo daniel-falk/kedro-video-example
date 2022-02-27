@@ -34,7 +34,7 @@ class Video:
     def __init__(self, filepath: str) -> None:
         self._cap = cv2.VideoCapture(filepath)
         self._n_frames = self._cap.get(cv2.CAP_PROP_FRAME_COUNT)
-        self.index = 0 # Next available frame
+        self.index = 0  # Next available frame
 
     @property
     def fourcc(self):
@@ -63,7 +63,9 @@ class Video:
         self.index = index + 1  # Next frame to decode after this
         ret, frame_bgr = self._cap.read()
         height, width = frame_bgr.shape[:2]
-        return PIL.Image.frombuffer("RGB", (width, height), frame_bgr, "raw", "BGR", 0, 0)
+        return PIL.Image.frombuffer(
+            "RGB", (width, height), frame_bgr, "raw", "BGR", 0, 0
+        )
 
     def __len__(self) -> int:
         # OpenCV's frame count might be an approximation depending on what
@@ -119,10 +121,14 @@ class VideoDataSet(AbstractDataSet):
         # and then save it to another VideoDataSet which should use an .avi file with MJPEG
         # TODO: There is no way to use the OpenVN VideoWrite to write to an open file, so it does not
         # work together with fsspec. Investigate this further...
-        writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*video.fourcc), video.fps, video.size)
+        writer = cv2.VideoWriter(
+            save_path, cv2.VideoWriter_fourcc(*video.fourcc), video.fps, video.size
+        )
         try:
             for frame in video:
-                writer.write(np.array(frame)[:,:,::-1])  # PIL images are RGB, opencv expects BGR
+                writer.write(
+                    np.array(frame)[:, :, ::-1]  # PIL images are RGB, opencv expects BGR
+                )
         finally:
             writer.release()
 

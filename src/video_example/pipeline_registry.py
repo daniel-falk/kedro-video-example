@@ -32,6 +32,7 @@ from kedro.pipeline import Pipeline
 
 from video_example.pipelines import data_preprocessing
 
+
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.
 

@@ -7,7 +7,7 @@ def video_to_frames(video):
     # Test backward stepping
     imgs.update({"%08d" % i: video[i] for i in reversed(range(4, 8))})
     # Test individual indexes
-    for i in [10,11,9,8]:
+    for i in [10, 11, 9, 8]:
         imgs["%08d" % i] = video[i]
     # Test slices:
     for offset, img in enumerate(video[12:16]):
