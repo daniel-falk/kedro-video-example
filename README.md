@@ -6,14 +6,20 @@ Currently the video dataset is implemented on a fork of Kedro (to be merged with
 https://github.com/daniel-falk/kedro
 in the file: `kedro/extras/datasets/video/video_dataset.py`
 
-There is a simple pipeline implemented in `src/video_example/pipelines/data_preprocessing` that reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`.
+There is a sample pipeline implemented in `src/video_example/pipelines/data_preprocessing` that:
+1) reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`.
+2) Reads all frames of the video, performs edge detection on them, and saves them to a new video file
+3) Same as 2 but by using an generator so that only one frame is in memory at a time.
 
 ## Installation
 
-Install the project. This will install dependencies such as Kedro and DVC. Installation can preferably be done inside a python virtual envrionment.
+Install the modified version of Kedro with the `VideoDataSet` added:
 ```bash
-python -mvenv venv
-source venv/bin/activate
+pip install git+https://github.com/daniel-falk/kedro
+```
+
+Install the project. This will install dependencies such as DVC and OpenCV.
+```bash
 pip install -r src/requirements.txt
 ```
 
@@ -30,7 +36,7 @@ The kedro pipeline can be run with
 ```bash
 kedro run
 ```
-which will read the video file and create output frames in `data/02_intermediate/virat_tiny/`.
+which will read the video file and create output frames in `data/02_intermediate/virat_tiny/`, it will also create a video in `data/03_primary/` named `edge.mp4` and `edge_generator.mp4`. These videos can be viewed with e.g. `ffplay data/03_primary/edge.mp4`.
 
 Since the `dvc repro` command also generated raw frames using ffmpeg we can now compare the output of our pipeline using the `VideoDataSet` reader to the ones generated using ffmpeg. This can be done using the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with the following command and open the notebook.
 ```bash
