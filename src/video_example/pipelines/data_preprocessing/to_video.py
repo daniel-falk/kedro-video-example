@@ -2,7 +2,7 @@ from skimage import filters
 import numpy as np
 import PIL.Image
 
-from ...extras.datasets.video_dataset import IterableVideo, GeneratorVideo
+from kedro.extras.datasets.video.video_dataset import IterableVideo, GeneratorVideo
 
 
 def video_to_video(video):

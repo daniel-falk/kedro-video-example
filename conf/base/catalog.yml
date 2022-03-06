@@ -4,7 +4,7 @@
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
 virat_tiny:
-    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    type: video.VideoDataSet
     filepath: data/01_raw/virat_tiny/short.mp4
 
 ffmpeg_frames_virat_tiny:
@@ -22,13 +22,13 @@ frames_virat_tiny:
     filename_suffix: ".jpg"
 
 same_video:
-    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    type: video.VideoDataSet
     filepath: data/03_primary/same.mp4
 
 edge_video:
-    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    type: video.VideoDataSet
     filepath: data/03_primary/edge.mp4
 
 edge_video_generator:
-    type: video_example.extras.datasets.video_dataset.VideoDataSet
+    type: video.VideoDataSet
     filepath: data/03_primary/edge_generator.mp4
