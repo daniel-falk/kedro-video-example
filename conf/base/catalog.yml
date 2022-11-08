@@ -6,6 +6,7 @@
 virat_tiny:
     type: video.VideoDataSet
     filepath: data/01_raw/virat_tiny/short.mp4
+    layer: downloaded
 
 ffmpeg_frames_virat_tiny:
     type: PartitionedDataSet
@@ -13,6 +14,7 @@ ffmpeg_frames_virat_tiny:
         type: pillow.ImageDataSet
     path: data/01_raw/virat_tiny/frames/
     filename_suffix: ".png"
+    layer: dvc-output
 
 frames_virat_tiny:
     type: PartitionedDataSet
@@ -20,15 +22,19 @@ frames_virat_tiny:
         type: pillow.ImageDataSet
     path: data/02_intermediate/virat_tiny/
     filename_suffix: ".jpg"
+    layer: intermediate_output
 
 same_video:
     type: video.VideoDataSet
     filepath: data/03_primary/same.mp4
+    layer: output
 
 edge_video:
     type: video.VideoDataSet
     filepath: data/03_primary/edge.mp4
+    layer: output
 
 edge_video_generator:
     type: video.VideoDataSet
+    layer: output
     filepath: data/03_primary/edge_generator.mp4
