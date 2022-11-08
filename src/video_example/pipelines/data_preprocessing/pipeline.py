@@ -1,11 +1,17 @@
-from kedro.pipeline import Pipeline, node
+"""
+This is a boilerplate pipeline 'data_preprocessing'
+generated using Kedro 0.18.3
+"""
+
+from kedro.pipeline import Pipeline, node, pipeline
+
 
 from .to_frames import video_to_frames
 from .to_video import video_to_video, video_to_edge_video, video_to_edge_video_generator
 
 
-def create_pipeline(**kwargs):
-    return Pipeline(
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline(
         [
             node(
                 func=video_to_frames,

@@ -2,7 +2,7 @@ from skimage import filters
 import numpy as np
 import PIL.Image
 
-from ...extras.datasets.video_dataset import IterableVideo, GeneratorVideo
+from kedro.extras.datasets.video.video_dataset import SequenceVideo, GeneratorVideo
 
 
 def video_to_video(video):
@@ -19,7 +19,7 @@ def _frame_to_edge(frame):
 def video_to_edge_video(video):
     """Do edge detection on a video"""
     frames = [_frame_to_edge(frame) for frame in video]
-    return IterableVideo(frames, fps=video.fps, fourcc=video.fourcc)
+    return SequenceVideo(frames, fps=video.fps, fourcc=video.fourcc)
 
 
 def video_to_edge_video_generator(video):

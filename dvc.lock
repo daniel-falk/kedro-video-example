@@ -15,17 +15,17 @@ stages:
       size: 3681035
     outs:
     - path: data/01_raw/virat_tiny/short.mp4
-      md5: d1e8e885007ce0f2b4c0c6490f283512
-      size: 338070
+      md5: 88905cdff70d3017229fdb805453ff88
+      size: 338050
   Extract frames:
     cmd: mkdir data/01_raw/virat_tiny/frames/ && ffmpeg -i data/01_raw/virat_tiny/short.mp4
       data/01_raw/virat_tiny/frames/%6d.png
     deps:
     - path: data/01_raw/virat_tiny/short.mp4
-      md5: d1e8e885007ce0f2b4c0c6490f283512
-      size: 338070
+      md5: 88905cdff70d3017229fdb805453ff88
+      size: 338050
     outs:
     - path: data/01_raw/virat_tiny/frames/
-      md5: 726cb05c22d1a727f40ba377f8a024b1.dir
-      size: 24190334
+      md5: f3a9c04db94d41c4a3f5367e5be9614c.dir
+      size: 24528878
       nfiles: 24

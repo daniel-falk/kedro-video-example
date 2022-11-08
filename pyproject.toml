@@ -1,15 +1,10 @@
 [tool.kedro]
 package_name = "video_example"
-project_name = "video_example"
-project_version = "0.17.7"
+project_name = "video example"
+project_version = "0.18.3"
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
-known_third_party = "kedro"
+profile = "black"
 
 [tool.pytest.ini_options]
 addopts = """
