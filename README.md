@@ -30,7 +30,7 @@ kedro run
 ```
 which will read the video file and create output frames in `data/02_intermediate/virat_tiny/`.
 
-Since the `dvc repro` command also generated raw frames using ffmpeg we can now compare the output of our pipeline using the `VideoDataSet` reader to the ones generated using ffmpeg. This can be done using the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with the following command and open the notebook.
+Since the `dvc repro` command also generated raw frames using ffmpeg we can now compare the output of our pipeline using the `VideoDataSet` reader to the ones generated using ffmpeg. This can be done using the Jupyter Notebook implemented in `notebooks/check_decoder_indexing.ipynb`. Start the Jupyter server with the following command and open the notebook. If the `catalog` is not defined, change the kernel to `Kedro (video_example)`
 ```bash
 kedro jupyter notebook
 ```
