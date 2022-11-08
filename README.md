@@ -1,8 +1,8 @@
 # Kedro video dataset example pipeline
 
-This repository aims to implement a video dataset for the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
+This repository aims to test the ongoing implementation of a video dataset for the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
 
-Currently the video dataset is implemented in `src/video_example/extras/datasets/video_dataset.py`.
+The implementation is currently discussed in [this PR](https://github.com/kedro-org/kedro/pull/1312).
 
 There is a simple pipeline implemented in `src/video_example/pipelines/data_preprocessing` that reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`.
 
