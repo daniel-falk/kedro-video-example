@@ -38,3 +38,6 @@ kedro jupyter notebook
 In the notebook result it can be seen that there are some small differences in the pixel values as decoded by OpenCV (`VideoDataSet`) and ffmpeg, but there is no offset or index errors in the addressing since the diagonal of the distance comparizon is the smallest.
 
 The kedro pipeline should also have created two edge detection videos in the `03_primary` folder. These can be played with a regular movie player, e.g. `ffplay data/03_primary/edge.mp4`.
+
+## Running with AWS S3 storage
+Copy the file `conf/local/catalog.yml.2` to `conf/local/catalog.yml` and modify as needed. Then rerun the pipeline with `kedro run`.
