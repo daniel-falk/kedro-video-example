@@ -22,6 +22,12 @@ def video_to_edge_video(video):
     return SequenceVideo(frames, fps=video.fps, fourcc=video.fourcc)
 
 
+def frames_to_edge_video(frames):
+    """Do edge detection on a video"""
+    frames = [_frame_to_edge(load_frame()) for load_frame in frames.values()]
+    return SequenceVideo(frames, fps=10)
+
+
 def video_to_edge_video_generator(video):
     """Do edge detection on a video"""
     generator = (_frame_to_edge(frame) for frame in video)

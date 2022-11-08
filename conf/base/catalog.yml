@@ -29,9 +29,19 @@ same_video:
     filepath: data/03_primary/same.mp4
     layer: output
 
-edge_video:
+edge_video_from_video:
     type: video.VideoDataSet
-    filepath: data/03_primary/edge.mp4
+    filepath: data/03_primary/edge_from_video.mp4
+    layer: output
+
+edge_video_frames:
+    type: video.VideoDataSet
+    filepath: data/03_primary/edge_frames.mp4
+    layer: output
+
+edge_video_ffmpeg_frames:
+    type: video.VideoDataSet
+    filepath: data/03_primary/edge_ffmpeg_frames.mp4
     layer: output
 
 edge_video_generator:

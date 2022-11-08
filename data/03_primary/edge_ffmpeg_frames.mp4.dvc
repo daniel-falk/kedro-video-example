@@ -1,0 +1,4 @@
+outs:
+- md5: c119b2211e72862911a83314b85a8628
+  size: 272577
+  path: edge_ffmpeg_frames.mp4

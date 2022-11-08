@@ -1,0 +1,4 @@
+outs:
+- md5: 8bf69b07d048eef2a47a235c8bfc358c
+  size: 305259
+  path: edge_frames.mp4
