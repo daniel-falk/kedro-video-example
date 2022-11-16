@@ -1,10 +1,13 @@
 # Kedro video dataset example pipeline
 
-This repository aims to test the ongoing implementation of a video dataset for the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
+This repository aims to show how the new `VideoDataSet` can be used in the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
 
-The implementation is currently discussed in [this PR](https://github.com/kedro-org/kedro/pull/1312).
+The video dataset was merged in [this PR](https://github.com/kedro-org/kedro/pull/1312) and is still not included in the latest release.
 
-There is a simple pipeline implemented in `src/video_example/pipelines/data_preprocessing` that reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`.
+DVC pipelines are used to download a video file which the Kedro pipeline can run on. The DVC pipeline also uses FFMPEG to extract frames from a video, this is not needed since the Kedro `VideoDataSet` can do the same thing, but is used here as an example on how images can be used as input to the Kedro `VideoDataSet`.
+
+There is a pipeline implemented in `src/video_example/pipelines/data_preprocessing` that reads a video using the `VideoDataSet` and saves each frame using the `PartitionedDataset` for `ImageDataSet`. There are multiple parts of the pipeline that shows how to read from images and write to video, read from video and write to images, read from video, apply a transformation to the frames and write to another video. The full pipeline is visualized in the image:
+![Kedro pipeline image](.images/pipeline.png)
 
 ## Installation
 
