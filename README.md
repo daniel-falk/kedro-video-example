@@ -2,7 +2,10 @@
 
 This repository aims to show how the new `VideoDataSet` can be used in the Kedro project (take a look at the [Kedro documentation](https://kedro.readthedocs.io)).
 
-The video dataset was merged in [this PR](https://github.com/kedro-org/kedro/pull/1312) and is still not included in the latest release.
+The video dataset was merged in [this PR](https://github.com/kedro-org/kedro/pull/1312) and is still not included in the latest release. Make sure that you have Kedro installed from the main branch:
+```
+pip install --force-reinstall git+https://github.com/kedro-org/kedro
+```
 
 DVC pipelines are used to download a video file which the Kedro pipeline can run on. The DVC pipeline also uses FFMPEG to extract frames from a video, this is not needed since the Kedro `VideoDataSet` can do the same thing, but is used here as an example on how images can be used as input to the Kedro `VideoDataSet`.
 
@@ -43,4 +46,8 @@ In the notebook result it can be seen that there are some small differences in t
 The kedro pipeline should also have created two edge detection videos in the `03_primary` folder. These can be played with a regular movie player, e.g. `ffplay data/03_primary/edge.mp4`.
 
 ## Running with AWS S3 storage
-Copy the file `conf/local/catalog.yml.2` to `conf/local/catalog.yml` and modify as needed. Then rerun the pipeline with `kedro run`.
+Update the file `conf/s3/parameters.yml` with your S3 bucket name and a prefix to use.
+
+After running `dvc repro` to download the video and extract the frames, upload the data from `data/01_raw/virat_tiny/` to S3 in the bucket and prefix you specifies as `s3://{bucket}/{prefix}/01_raw/virat_tiny/`.
+
+Then rerun the pipeline with `kedro run --env s3`. This command will respect the normal enviroment variables used for credentials and configuration by the aws cli and the boto3 library.

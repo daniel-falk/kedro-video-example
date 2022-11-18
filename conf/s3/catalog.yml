@@ -5,14 +5,14 @@
 
 virat_tiny:
     type: video.VideoDataSet
-    filepath: s3://fixedit-dev-test/kedro-test/01_raw/virat_tiny/short.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/01_raw/virat_tiny/short.mp4
     layer: downloaded
 
 ffmpeg_frames_virat_tiny:
     type: PartitionedDataSet
     dataset:
         type: pillow.ImageDataSet
-    path: s3://fixedit-dev-test/kedro-test/01_raw/virat_tiny/frames/
+    path: ${s3.bucket}/${s3.prefix}/01_raw/virat_tiny/frames/
     filename_suffix: ".png"
     layer: dvc-output
 
@@ -20,31 +20,33 @@ frames_virat_tiny:
     type: PartitionedDataSet
     dataset:
         type: pillow.ImageDataSet
-    path: data/02_intermediate/virat_tiny/
+        save_args:
+            format: JPEG
+    path: ${s3.bucket}/${s3.prefix}/02_intermediate/virat_tiny/
     filename_suffix: ".jpg"
     layer: intermediate_output
 
 same_video:
     type: video.VideoDataSet
-    filepath: s3://fixedit-dev-test/kedro-test/output/same.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/03_primary/same.mp4
     layer: output
 
 edge_video_from_video:
     type: video.VideoDataSet
-    filepath: s3://fixedit-dev-test/kedro-test/output/edge_from_video.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/03_primary/edge_from_video.mp4
     layer: output
 
 edge_video_frames:
     type: video.VideoDataSet
-    filepath: s3://fixedit-dev-test/kedro-test/output/edge_frames.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/03_primary/edge_frames.mp4
     layer: output
 
 edge_video_ffmpeg_frames:
     type: video.VideoDataSet
-    filepath: s3://fixedit-dev-test/kedro-test/output/edge_ffmpeg_frames.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/03_primary/edge_ffmpeg_frames.mp4
     layer: output
 
 edge_video_generator:
     type: video.VideoDataSet
     layer: output
-    filepath: s3://fixedit-dev-test/kedro-test/output/edge_generator.mp4
+    filepath: ${s3.bucket}/${s3.prefix}/03_primary/edge_generator.mp4
